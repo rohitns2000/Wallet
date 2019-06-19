@@ -167,6 +167,14 @@ public class MyWallet {
 			case "6":   System.out.println("Exiting Program Thank You! :)");
 							System.exit(0);
 							break;
+							
+			case "7": System.out.println("Enter The phone number of the account.");
+							String lol = br.readLine();
+							Long phone = Long.parseLong(lol);
+							service.deleteAccount(phone);
+							System.out.println("Successfull!!!");
+							break;
+			
 				
 			default:
 				System.out.println("Please Enter A Valid Number!!!");

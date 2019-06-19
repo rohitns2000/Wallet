@@ -27,9 +27,9 @@ public class AccountDAOImpl implements AccountDAO {
 	}
 
 	@Override
-	public boolean deleteAccount(Account ob) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean deleteAccount(long ob) {
+		accmap.remove(ob);
+		return true;
 	}
 
 	@Override

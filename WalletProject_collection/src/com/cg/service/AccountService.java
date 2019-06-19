@@ -22,6 +22,10 @@ public class AccountService implements Gst,Transaction{
 	{
 		return dao.getAccount(mobileno);
 	}
+	
+	public boolean deleteAccount(long o) {
+		return dao.deleteAccount(o);
+	}
 
 	@Override
 	public double withdraw(Account ob, double amount) throws InsufficientFundException {
