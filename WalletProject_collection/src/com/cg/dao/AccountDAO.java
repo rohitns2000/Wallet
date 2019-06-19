@@ -10,7 +10,4 @@ public interface AccountDAO {
 	public boolean deleteAccount(long o);
 	public Account getAccount(Long mobileno);
 	public Map<Long,Account> getAllAccounts();
-	public boolean transferMoney(Account from, Account to);
-	
-
 }

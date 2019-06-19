@@ -33,6 +33,7 @@ public class MyWallet {
 		System.out.println("4.Transfer");
 		System.out.println("5.Deposit");
 		System.out.println("6.exit");
+		System.out.println("7.Delete");
 		System.out.println("Enter Your Choice :");
 		System.out.println("==================");
 		choice = br.readLine();
@@ -90,11 +91,57 @@ public class MyWallet {
 							}//end of mobile while
 							////accepting and validating account holder() shouldnt be empty)
 							System.out.println("Enter Account holders name");
-							ah=br.readLine();
+							while(true)
+							{
+								String name=br.readLine();
+								boolean ch1=Validator.validatedata(name, Validator.namepattern);
+								if(ch1==true)
+								{
+									try
+									{
+										ah=name;
+										break;
+									}
+									catch(NumberFormatException e)
+									{
+										System.out.println("Re-enter!");
+									}
+								}
+								else 
+								{
+									System.out.println("Re Enter proper Name!");
+								}
+							}
+							
+							System.out.println("Enter Balance Amount");
+							while(true)
+							{
+								String s_bal=br.readLine();
+								//String name=br.readLine();
+								boolean ch1=Validator.validatedata(s_bal, Validator.balancepattern);
+								if(ch1==true)
+								{
+									try
+									{
+										bal=Double.parseDouble(s_bal);
+										break;
+									}
+									catch(NumberFormatException e)
+									{
+										System.out.println("Re-enter proper balance!");
+									}
+								}
+								else 
+								{
+									System.out.println("Re Enter balance");
+								}
+							}
+							//System.out.println("Enter Account holders name");
+							//ah=br.readLine();
 							//accepting and validating balance(first letter shouldnt be space,)
-							System.out.println("Enter initial balance");
-							String s_bal=br.readLine();
-							bal=Double.parseDouble(s_bal);//typecasting
+							//System.out.println("Enter initial balance");
+							//String s_bal=br.readLine();
+							//bal=Double.parseDouble(s_bal);//typecasting
 							Account ob=new Account(id,mb,ah,bal);
 							boolean b = service.addAccount(ob);
 							System.out.println("Successfully Added "+b);
@@ -123,14 +170,24 @@ public class MyWallet {
 							 System.out.println("Enter the amount you want to withdraw:");
 							 String iamt = br.readLine();
 							 amt = Double.parseDouble(iamt);
+							 while(true) {
+							 double amount = 0;
 							 		try {
-							 				service.withdraw(ao, amt);
+							 				amount = service.withdraw(ao, amt);
 							 			} catch (InsufficientFundException e) {
 							 					// TODO Auto-generated catch block
 							 					System.out.println("insufficient fund");
+							 					System.out.println("Enter the amount you want to withdraw:");
+							 					String iamt1 = br.readLine();
+												amt = Double.parseDouble(iamt1);
 							 			}
-							 		break;
-							 		
+							 		finally {
+							 			service.commit(ao);
+							 		}
+							 		if(amount>1000)
+							 		{break;}
+							 }	
+							 break;
 			case "4": System.out.println("Enter the mobile no from where you need to withdraw amount:");
 							String idi1 = br.readLine();
 							mobileno = Long.parseLong(idi1);
@@ -143,6 +200,8 @@ public class MyWallet {
 							String iamt1 = br.readLine();
 							amt = Double.parseDouble(iamt1);
 							service.transferMoney(ao1, ao2, amt);
+							service.commit(ao1);
+							service.commit(ao2);
 //			try {
 //				service.withdraw(ao1, amt);
 //			} catch (InsufficientFundException e) {
@@ -162,6 +221,7 @@ public class MyWallet {
 									amt = Double.parseDouble(iamt2);
 									
 									service.deposit(ao3, amt);
+									service.commit(ao3);
 									break;
 			
 			case "6":   System.out.println("Exiting Program Thank You! :)");

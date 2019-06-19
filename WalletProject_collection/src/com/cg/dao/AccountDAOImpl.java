@@ -43,11 +43,4 @@ public class AccountDAOImpl implements AccountDAO {
 		return accmap;
 	}
 
-	@Override
-	public boolean transferMoney(Account from, Account to) {
-		accmap.put(from.getMobile(), from);
-		accmap.put(to.getMobile(), to);
-		return false;
-	}
-
 }

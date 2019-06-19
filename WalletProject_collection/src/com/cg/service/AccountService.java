@@ -18,6 +18,11 @@ public class AccountService implements Gst,Transaction{
 		return dao.getAllAccounts();
 	}
 	
+	public boolean commit(Account o)
+	{
+		return dao.updateAccount(o);
+	}
+	
 	public Account findAccount(Long mobileno)
 	{
 		return dao.getAccount(mobileno);
